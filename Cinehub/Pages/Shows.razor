@@ -1,0 +1,228 @@
+﻿@page "/shows"
+@using Syncfusion.Blazor.Cards
+@using Syncfusion.Blazor.Navigations;
+  
+<section class="bg">
+    <div class="container mt-3">
+        <SfTab OverflowMode="OverflowMode.Scrollable">
+             <TabItems>
+                @foreach(TabData item in TabItems)
+                {
+                    <TabItem>
+                        <ChildContent>
+                            <TabHeader Text=@item.Header ></TabHeader>
+                        </ChildContent>
+                        <ContentTemplate>
+                           <div class="row my-4">
+                                  @foreach(Movies movie in item.Content){
+                                    <div class="col-md-5 my-3">
+                                        <MovieCard movies="movie"></MovieCard>
+                                    </div>
+                                  }
+                             </div>
+                        </ContentTemplate>
+                     </TabItem> 
+                }
+             </TabItems>
+         </SfTab>
+        </div>
+</section>
+
+<style>
+    .bg{
+        background-color: black
+    }
+    section {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 400px;
+      }
+
+      .e-tab .e-tab-header .e-toolbar-item{
+    background: rgba(9,8,14,1);
+    border: 0px;
+    width:150px;
+}
+
+   .e-tab .e-tab-header .e-tab-text { 
+        color: white !important;
+        padding: 1rem;
+        font-size: 18px;
+    } 
+
+    .e-tab .e-tab-header .e-toolbar-item .e-tab-wrap:hover {
+    background: black !important;
+    border:0px
+}
+   .e-tab .e-tab-header { 
+        background: black !important;     
+
+    } 
+.e-tab .e-tab-header .e-toolbar-item.e-active {
+    background: black;
+     border:0px
+}
+</style>
+
+@code{
+    public class TabData
+    {
+        public string Header { get; set; }
+        public List<Movies> Content { get; set; }
+    }
+    public String[] days=new String[5];
+    public List<TabData> TabItems;
+    public int count = 7;
+
+    public List<Movies>[] movies = new List<Movies>[5];
+
+    public void Movielist0()
+    {
+        movies[0] = new List<Movies>(){
+            new Movies()
+            {
+                title="Interstellar",
+                runtime="2h 49min",
+                rating=8.7,
+                genre="Sci-fi",
+                viewerRating="PG-13",
+                imgUrl="/Images/Matthew-McConaughey-Interstellar-Christopher-Nolan.webp",
+                youtubeUrl="https://www.youtube.com/watch?v=zSWdZVtXT7E"
+            },
+            new Movies()
+            {
+                title="The Batman",
+                runtime="2h 53min",
+                rating=8.5,
+                genre="Action",
+                viewerRating="PG-13",
+                imgUrl="/Images/The-Batman.webp",
+                youtubeUrl="https://www.youtube.com/watch?v=mqqft2x_Aa4"
+            },
+              new Movies()
+            {
+                title="Jurassic World: Dominion",
+                runtime="2h 35min",
+                rating=7.6,
+                genre="Sci-fi",
+                viewerRating="PG-13",
+                imgUrl="/Images/jurworld.jpg",
+                youtubeUrl="https://www.youtube.com/watch?v=mqqft2x_Aa4"
+            }
+        };
+    }
+
+    public void Movielist1()
+    {
+        movies[1] = new List<Movies>(){        
+            new Movies()
+            {
+                title="The Batman",
+                runtime="2h 53min",
+                rating=8.5,
+                genre="Action",
+                viewerRating="PG-13",
+                imgUrl="/Images/The-Batman.webp",
+                youtubeUrl="https://www.youtube.com/watch?v=mqqft2x_Aa4"
+            }
+        };
+    }
+
+    public void Movielist2()
+    {
+        movies[2] = new List<Movies>(){        
+            new Movies()
+            {
+                title="The Batman",
+                runtime="2h 53min",
+                rating=8.5,
+                genre="Action",
+                viewerRating="PG-13",
+                imgUrl="/Images/The-Batman.webp",
+                youtubeUrl="https://www.youtube.com/watch?v=mqqft2x_Aa4"
+            }
+        };
+    }
+    public void Movielist3()
+    {
+        movies[3] = new List<Movies>(){        
+            new Movies()
+            {
+                title="The Batman",
+                runtime="2h 53min",
+                rating=8.5,
+                genre="Action",
+                viewerRating="PG-13",
+                imgUrl="/Images/The-Batman.webp",
+                youtubeUrl="https://www.youtube.com/watch?v=mqqft2x_Aa4"
+            }
+        };
+    }
+    public void Movielist4()
+    {
+        movies[4] = new List<Movies>(){        
+            new Movies()
+            {
+                title="The Batman",
+                runtime="2h 53min",
+                rating=8.5,
+                genre="Action",
+                viewerRating="PG-13",
+                imgUrl="/Images/The-Batman.webp",
+                youtubeUrl="https://www.youtube.com/watch?v=mqqft2x_Aa4"
+            }
+        };
+    }
+    protected override void OnInitialized()
+    {
+        Movielist0();
+        Movielist1();
+        Movielist2();
+        Movielist3();
+        Movielist4();
+        DayOfWeek wk = DateTime.Today.DayOfWeek;
+        for(int i = 0; i < 5; ++i)
+        {
+            days[i]=wk.ToString();
+            wk=wk+1;
+            if ((int)wk == 7)
+                wk = 0;
+        }
+        TabItems = new List<TabData>()
+        {
+            new TabData
+            {
+                Header=days[0],
+                Content=movies[0]
+            },
+             new TabData
+            {
+                Header=days[1],
+                Content=movies[1]
+            },
+             new TabData
+            {
+                Header=days[2],
+                Content=movies[2]
+            },
+             new TabData
+            {
+                Header=days[3],
+                Content=movies[3]
+            },
+             new TabData
+            {
+                Header=days[4],
+                Content=movies[4]
+            }
+        };
+        for(int i=0;i<5;++i)
+        {
+            Console.WriteLine(days[i]);
+        }
+    }
+
+}
+
