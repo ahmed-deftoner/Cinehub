@@ -2,6 +2,8 @@
 @using Syncfusion.Blazor.DropDowns
 @using Syncfusion.Blazor.Buttons
 
+@inject NavigationManager NavigationManager 
+
 <section class="bg">
     <div class="container">
             @for (int j = 0; j < 10; ++j)
@@ -32,7 +34,7 @@
                 </div>
             }
             <div class="row my-4">
-                   <SfButton CssClass="e-danger">Book</SfButton>
+                   <SfButton CssClass="e-danger"  @onclick="@((args) => NavigateToPayment())">Book</SfButton>
             </div>
     </div>
 </section>
@@ -52,6 +54,11 @@
             }
         }
     }
+
+     private void NavigateToPayment() 
+    { 
+        NavigationManager.NavigateTo("/payment"); 
+    } 
 
     public void toggle(int i,int j)
     {

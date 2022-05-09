@@ -1,0 +1,154 @@
+﻿@page "/payment"
+@using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.Buttons
+@using System.ComponentModel.DataAnnotations
+
+<section class="bg">
+    <div class="container">
+          <div class="row my-3">
+            <SfRadioButton CssClass="e-success" Label="Visa Card" Name="payment" Value="Visa Card" Checked="@checkedValue"></SfRadioButton>
+        </div>
+        <div class="row my-3">
+            <SfRadioButton CssClass="e-success" Label="MasterCard" Name="payment" Value="MasterCard" Checked="@checkedValue"></SfRadioButton>
+        </div>
+        <div class="row my-3">
+            <SfRadioButton CssClass="e-success" Label="Ass" Name="payment" Value="Ass" Checked="@checkedValue"></SfRadioButton>
+        </div>
+         <div class="row my-3">
+            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <b class="example-label" style="color:#93F9B9; font-size:20px">Card Details</b>
+            </div>
+        </div>
+          @if (string.IsNullOrEmpty(Message))
+        {
+            <EditForm Model="@annotation" OnValidSubmit="@OnValidSubmit" OnInvalidSubmit="@OnInvalidSubmit">                
+                <DataAnnotationsValidator />
+                <div class="row my-3">
+                    <div class="col-xs-6 col-sm-6 cl-lg-6 col-md-6">
+                        <SfTextBox @bind-Value="@annotation.CardNumber" Placeholder="Card Number" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                        <ValidationMessage For="@(() => annotation.CardNumber)" />
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                        <SfTextBox @bind-Value="@annotation.CardHolder" Placeholder="Card Holder" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                        <ValidationMessage For="@(() => annotation.CardHolder)" />
+                    </div>
+                </div>
+          <div class="row my-3">
+            <div class="col-xs-4 col-sm-4 col-lg-4 col-md-4">
+                <SfTextBox @bind-Value="@annotation.ExpiryDate" Placeholder="Expiry Date" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                <ValidationMessage For="@(() => annotation.ExpiryDate)" />
+            </div>
+            <div class="col-xs-4 col-sm-4 col-lg-4 col-md-4">
+                <SfTextBox @bind-Value="@annotation.CVV" Placeholder="CVV" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                <ValidationMessage For="@(() => annotation.CVV)" />
+            </div>
+            <div class="col-xs-4 col-sm-4 col-lg-4 col-md-4">
+            </div>
+        </div>
+                <div class="submit-btn">
+                    <SfButton type="submit" IsPrimary="true">Submit</SfButton>
+                </div>
+            </EditForm>
+        }
+        else
+        {
+            <div class="alert alert-success">
+                @Message
+            </div>
+        }
+    </div>
+</section>
+
+ <style>
+    .bg{
+        background-color: black
+    }
+       section {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 400px;
+      }
+      .e-float-input.e-control-wrapper:not(.e-error) input:valid ~ label.e-float-text, .e-float-input.e-control-wrapper:not(.e-error) input ~ label.e-label-top.e-float-text {
+        color: white;
+        font-size: 15px;
+    }
+       .e-input-group.e-corner {
+        border-radius: 4px;
+    }
+
+      .e-radio-wrapper.e-success .e-radio:checked + label::after { /* csslint allow: adjoining-classes */
+        background-color: #689f38;
+        color: #689f38;
+    }
+
+    .e-radio
+    .e-radio-wrapper.e-success .e-radio:checked:focus + label::after,
+    .e-radio-wrapper.e-success .e-radio:checked + label:hover::after { /* csslint allow: adjoining-classes */
+        background-color: #449d44;
+    }
+
+     .e-radio-wrapper.e-success .e-radio:checked + ::before {
+        border-color: #689f38;
+        background-color: #fff;
+    }
+
+    .e-radio-wrapper.e-success .e-radio:checked:focus + ::before,
+    .e-radio-wrapper.e-success .e-radio:checked + label:hover::before { /* csslint allow: adjoining-classes */
+        border-color: #449d44;
+    }
+      .e-radio-wrapper.e-success .e-radio + label:hover::before {
+        border-color: #b1afaf;
+    }
+     .submit-btn {
+        display: flex;
+        justify-content: center;
+    }
+    .validation-message {
+        color: red;
+        padding: 5px 0px 0px;
+    }
+    .e-radio .e-float-text{
+        color:white;
+    }
+</style>
+@code {
+    private string checkedValue = "Visa Card";
+
+    private string Message = string.Empty;
+    private Annotation annotation = new Annotation();
+
+
+    async void OnValidSubmit()
+    {
+        Message = "Form Submitted Successfully!";
+        await Task.Delay(2000);
+        Message = string.Empty;
+        annotation.CardNumber = null;
+        annotation.CardHolder = null;
+        annotation.ExpiryDate = null;
+        annotation.CVV = null;
+        StateHasChanged();
+     }
+
+    private void OnInvalidSubmit()
+    {
+        Message = string.Empty;
+    }
+
+       public class Annotation
+        {
+            [Required(ErrorMessage = "The Card Number field is required.")]
+            [StringLength(11,MinimumLength =11,ErrorMessage ="card number should be 11 digits long")]
+            public string CardNumber { get; set; }
+            [Required(ErrorMessage = "The Card Holder field is required.")]
+            public string CardHolder { get; set; }
+            [Required(ErrorMessage = "The Expiry Date field is required.")]
+            [StringLength(4,MinimumLength =4,ErrorMessage ="expiry date should be 4 digits long")]
+            public string ExpiryDate { get; set; }
+            [Required(ErrorMessage = "The CVV field is required.")]
+            [StringLength(3,MinimumLength =3,ErrorMessage ="cvv should be 3 digits long")]
+            public string CVV { get; set; }
+      }
+}
