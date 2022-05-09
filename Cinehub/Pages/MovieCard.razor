@@ -1,0 +1,69 @@
+﻿ @using Cinehub.Models
+
+<div class="card border-0 text-white" style="height:25rem; border-radius:10%">
+
+    <img src=@movies.imgUrl class="card-img" style="height:25rem;width:28rem;border-radius:10%">
+    <div class="card-img-overlay overlay-bg" style="border-radius:10%">
+        <div class="position-absolute bottom-0">
+                <h4 class="card-title">@movies.title</h4>
+                <div class="row">
+                    <img class="col-2" src="/Images/4373222_imdb_logo_logos_icon.png" style="height:1.5rem"/>
+                    <h5 class="col-10">: @movies.rating</h5>
+                </div>
+                <p class="card-text">@movies.runtime</p>
+                <div class="row">
+                    <div class="col-md-6 genre">
+                        @movies.genre
+                    </div>
+                    <div class="col-md-6 text-end viewerRating">
+                        @movies.viewerRating
+                    </div>
+                </div>
+                  <div class="row mx-3 gap-3 my-3" style="width:100%;">
+                    <a href=@movies.youtubeUrl target="_blank" class="col btn btn-outline-danger rounded-pill" >Watch Trailer</a>
+                    <a href="booking" class="col btn btn-outline-success rounded-pill">Book Ticket</a>
+                </div>
+          </div>
+               
+    </div>
+</div> 
+
+<style>
+     img{
+        max-width: 100%;
+        max-height: 100%;
+        display: block; /* remove extra space below image */
+    }
+   .overlay-bg{
+      background: rgb(9,8,14);
+background: linear-gradient(0deg, rgba(9,8,14,1) 38%, rgba(9,8,14,0.3) 76%, rgba(9,8,14,0.1157505238423494) 100%);
+   }
+    .h5-rating{
+        font-size:1rem;
+        font-weight:500
+    }
+    .mybtn{
+        border-radius:20%;
+        border-width:2px;
+        border-color:#93F9B9
+    }
+
+    .genre{
+        font-family:'Lucida Sans';
+        font-size:18px;
+        font-weight:500;
+    }
+
+    .viewerRating{
+        font-family:'Segoe UI';
+        font-size:18px;
+        font-weight:700;
+        color:gray;
+    }
+</style>
+
+@code {
+    [Parameter]
+    public Movies movies{ get; set; }
+
+}
