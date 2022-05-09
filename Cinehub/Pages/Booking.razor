@@ -1,0 +1,93 @@
+﻿@page "/booking"
+@using Syncfusion.Blazor.DropDowns
+@using Syncfusion.Blazor.Buttons
+
+<section class="bg">
+    <div class="container">
+            @for (int j = 0; j < 10; ++j)
+            {
+                int row = j;
+                <div class="row">
+                    <div class="col-md-3 text-end">
+                        @for (int i = 0; i < 4; ++i)
+                        {
+                            int col = i;
+                            <SfButton CssClass="@css[row,col]" IsToggle="true" OnClick="(e=>toggle(row,col))" @ref="toggleBtn[row,col]"></SfButton>
+                        }
+                    </div>
+                    <div class="col-md-6 text-center">
+                        @for (int i = 0; i < 8; ++i)
+                        {
+                            int col = i;
+                            <SfButton CssClass="@css[row,col+4]" IsToggle="true" OnClick="(e=>toggle(row,col+4))" @ref="toggleBtn[row,col+4]"></SfButton>
+                        }
+                    </div>
+                    <div class="col-md-3 text-start">
+                        @for (int i = 0; i < 4; ++i)
+                        {
+                            int col = i;
+                            <SfButton CssClass="@css[row,col+12]" IsToggle="true" OnClick="(e=>toggle(row,col+12))" @ref="toggleBtn[row,col+12]"></SfButton>
+                        }
+                    </div>
+                </div>
+            }
+            <div class="row my-4">
+                   <SfButton CssClass="e-danger">Book</SfButton>
+            </div>
+    </div>
+</section>
+
+@code{
+    SfButton[,] toggleBtn=new SfButton[10,16];
+    public string[,] css = new string[10, 16];
+ 
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        for (int i = 0; i < 10; ++i)
+        {
+            for (int j = 0; j < 16; ++j)
+            {
+                css[i, j] = "e-primary";
+            }
+        }
+    }
+
+    public void toggle(int i,int j)
+    {
+        if (toggleBtn[i,j].CssClass == "e-primary")
+        {
+            css[i,j] = "e-warning";
+        }
+        else
+        {
+            css[i,j]="e-primary";
+        }
+        StateHasChanged();
+
+    }
+}
+
+<style>
+    .bg{
+        background-color: black
+    }
+    section {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 400px;
+      }
+
+    .e-custom {
+        color: blue;    
+    }
+
+    .e-custom, .e-custom:hover, .e-custom:focus, .e-custom:active {
+        background-color: blue;
+        color: #fff;
+    }
+  
+</style>
+
