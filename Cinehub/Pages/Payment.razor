@@ -5,7 +5,7 @@
 
 <section class="bg">
     <div class="container">
-          <div class="row my-3">
+     @*     <div class="row my-3">
             <SfRadioButton CssClass="e-success" Label="Visa Card" Name="payment" Value="Visa Card" Checked="@checkedValue"></SfRadioButton>
         </div>
         <div class="row my-3">
@@ -13,6 +13,14 @@
         </div>
         <div class="row my-3">
             <SfRadioButton CssClass="e-success" Label="Ass" Name="payment" Value="Ass" Checked="@checkedValue"></SfRadioButton>
+        </div>*@
+        <div class="container-fluid mt-4">
+             <SfRadioButton Name="custom" CssClass="e-success" Value="Success" @bind-Checked="stringChecked"></SfRadioButton> 
+             <label style="color:white">VISA Card</label>
+        </div> 
+        <div class="container-fluid">
+              <SfRadioButton Name="custom" CssClass="e-success" Value="Danger" @bind-Checked="stringChecked"></SfRadioButton> 
+              <label style="color:white">Master Card</label>
         </div>
          <div class="row my-3">
             <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
@@ -70,26 +78,18 @@
         align-items: center;
         min-height: 400px;
       }
-      .e-float-input.e-control-wrapper:not(.e-error) input:valid ~ label.e-float-text, .e-float-input.e-control-wrapper:not(.e-error) input ~ label.e-label-top.e-float-text {
-        color: white;
-        font-size: 15px;
-    }
-       .e-input-group.e-corner {
-        border-radius: 4px;
-    }
 
-      .e-radio-wrapper.e-success .e-radio:checked + label::after { /* csslint allow: adjoining-classes */
+        .e-radio-wrapper.e-success .e-radio:checked + label::after { /* csslint allow: adjoining-classes */
         background-color: #689f38;
         color: #689f38;
     }
 
-    .e-radio
     .e-radio-wrapper.e-success .e-radio:checked:focus + label::after,
     .e-radio-wrapper.e-success .e-radio:checked + label:hover::after { /* csslint allow: adjoining-classes */
         background-color: #449d44;
     }
 
-     .e-radio-wrapper.e-success .e-radio:checked + ::before {
+   .e-radio-wrapper.e-success .e-radio:checked + ::before {
         border-color: #689f38;
         background-color: #fff;
     }
@@ -98,9 +98,11 @@
     .e-radio-wrapper.e-success .e-radio:checked + label:hover::before { /* csslint allow: adjoining-classes */
         border-color: #449d44;
     }
-      .e-radio-wrapper.e-success .e-radio + label:hover::before {
+
+    .e-radio-wrapper.e-success .e-radio + label:hover::before {
         border-color: #b1afaf;
     }
+
      .submit-btn {
         display: flex;
         justify-content: center;
@@ -114,6 +116,7 @@
     }
 </style>
 @code {
+    private string stringChecked = "Danger"; 
     private string checkedValue = "Visa Card";
 
     private string Message = string.Empty;
