@@ -1,0 +1,181 @@
+﻿@page "/signUp"
+@using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.Buttons
+@using System.ComponentModel.DataAnnotations
+
+<section class="bg">
+    <div class="container">
+        <h1 style="font-weight:600;color:#93F9B9;" class="my-4">
+            Sign Up</h1>
+        <h3 style="font-weight:400;color:#93F9B9;text-align:center" class="my-5">
+            Personal Details</h3>
+        @if (string.IsNullOrEmpty(Message))
+        {
+            <EditForm Model="@annotation" OnValidSubmit="@OnValidSubmit" OnInvalidSubmit="@OnInvalidSubmit">                
+                <DataAnnotationsValidator />
+                <div class="row my-3">
+                    <div class="col-xs-6 col-sm-6 cl-lg-6 col-md-6">
+                        <SfTextBox @bind-Value="@annotation.FirstName" Placeholder="First Name" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                        <ValidationMessage For="@(() => annotation.FirstName)" />
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                        <SfTextBox @bind-Value="@annotation.LastName" Placeholder="Last Name" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                        <ValidationMessage For="@(() => annotation.LastName)" />
+                    </div>
+                </div>
+          <div class="row my-3">
+              <div class="col-xs-6 col-sm-6 cl-lg-6 col-md-6">
+                <SfTextBox @bind-Value="@annotation.email" Placeholder="Email" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                <ValidationMessage For="@(() => annotation.email)" />
+               </div>
+               <div class="col-xs-6 col-sm-6 cl-lg-6 col-md-6"/>
+        </div>
+        <div class="row my-3">
+            <div class="col-xs-6 col-sm-6 cl-lg-6 col-md-6">
+             <SfTextBox @bind-Value="@annotation.phoneNo" Placeholder="Phone Number" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                <ValidationMessage For="@(() => annotation.phoneNo)" />
+             </div>
+             <div class="col-xs-6 col-sm-6 cl-lg-6 col-md-6"/>
+        </div>
+         <h3 style="font-weight:400;color:#93F9B9;text-align:center" class="my-5">
+            Account Information</h3>
+           <div class="row my-3">
+            <div class="col-xs-6 col-sm-6 cl-lg-6 col-md-6">
+          <SfTextBox @bind-Value="@annotation.username" Placeholder="Username" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                <ValidationMessage For="@(() => annotation.username)" />
+             </div>
+             <div class="col-xs-6 col-sm-6 cl-lg-6 col-md-6"/>
+        </div>
+           <div class="row my-3">
+            <div class="col-xs-6 col-sm-6 cl-lg-6 col-md-6">
+             <SfTextBox @bind-Value="@annotation.password" Placeholder="Password" Type="InputType.Password" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                <ValidationMessage For="@(() => annotation.password)" />
+             </div>
+             <div class="col-xs-6 col-sm-6 cl-lg-6 col-md-6"/>
+        </div>
+                <div class="mb-5 mt-5 row mx-5">
+                    <SfButton type="Register" CssClass="e-custom">Submit</SfButton>
+                </div>
+            </EditForm>
+        }
+        else
+        {
+            <div class="alert alert-success">
+                @Message
+            </div>
+        }
+    </div>
+</section>
+
+ <style>
+    .bg{
+        background-color: black
+    }
+       section {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 400px;
+      }
+
+      .e-custom{
+          background-color:#93F9B9;
+          color:black;
+      }
+
+     .e-float-input.e-control-wrapper:not(.e-error) input:valid ~ label.e-float-text, .e-float-input.e-control-wrapper:not(.e-error) input ~ label.e-label-top.e-float-text {
+        color: white;
+        font-size: 15px;
+    }
+       .e-input-group.e-corner {
+        border-radius: 4px;
+    }
+
+      .e-radio-wrapper.e-success .e-radio:checked + label::after { /* csslint allow: adjoining-classes */
+        background-color: #689f38;
+        color: #689f38;
+    }
+
+    .e-radio
+    .e-radio-wrapper.e-success .e-radio:checked:focus + label::after,
+    .e-radio-wrapper.e-success .e-radio:checked + label:hover::after { /* csslint allow: adjoining-classes */
+        background-color: #449d44;
+    }
+
+     .e-radio-wrapper.e-success .e-radio:checked + ::before {
+        border-color: #689f38;
+        background-color: #fff;
+    }
+
+    .e-radio-wrapper.e-success .e-radio:checked:focus + ::before,
+    .e-radio-wrapper.e-success .e-radio:checked + label:hover::before { /* csslint allow: adjoining-classes */
+        border-color: #449d44;
+    }
+      .e-radio-wrapper.e-success .e-radio + label:hover::before {
+        border-color: #b1afaf;
+    }
+     .submit-btn {
+        display: flex;
+        justify-content: center;
+    }
+    .validation-message {
+        color: red;
+        padding: 5px 0px 0px;
+    }
+    .e-radio .e-float-text{
+        color:white;
+    }
+</style>
+
+@code {
+    private string stringChecked= "Visa Card";
+
+    private string Message = string.Empty;
+    private Annotation annotation = new Annotation();
+
+
+    async void OnValidSubmit()
+    {
+        Message = "Form Submitted Successfully!";
+        await Task.Delay(2000);
+        Message = string.Empty;
+        annotation.FirstName = null;
+        annotation.LastName = null;
+        annotation.email = null;
+        annotation.phoneNo = null;
+        annotation.username = null;
+        annotation.password = null;
+        StateHasChanged();
+    }
+
+    private void OnInvalidSubmit()
+    {
+        Message = string.Empty;
+    }
+
+/*    public void change()
+    {
+        Console.WriteLine(annotation.CardNumber);
+    }
+    */
+    public class Annotation
+    {
+        [Required(ErrorMessage = "The First Name field is required.")]
+        public string FirstName { get; set; }
+        [Required(ErrorMessage = "The Last Name field is required.")]
+        public string LastName { get; set; }
+        [Required(ErrorMessage = "The email field is required.")]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
+        public string email { get; set; }
+        [Required(ErrorMessage = "The phone number field is required.")]
+        [StringLength(11,MinimumLength =11,ErrorMessage ="phone number should be 11 characters long")]
+        public string phoneNo { get; set; }
+        [Required(ErrorMessage = "The username field is required.")]
+        [StringLength(50,MinimumLength =5,ErrorMessage ="username should be at least 5 characters long")]
+        public string username { get; set; }
+        [Required(ErrorMessage = "The password field is required.")]
+        [StringLength(50,MinimumLength =6,ErrorMessage ="password should be at least 6 characters long")]
+        public string password { get; set; }
+    }
+}

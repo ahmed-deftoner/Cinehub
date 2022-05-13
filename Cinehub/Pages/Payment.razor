@@ -79,17 +79,26 @@
         min-height: 400px;
       }
 
-        .e-radio-wrapper.e-success .e-radio:checked + label::after { /* csslint allow: adjoining-classes */
+         .e-float-input.e-control-wrapper:not(.e-error) input:valid ~ label.e-float-text, .e-float-input.e-control-wrapper:not(.e-error) input ~ label.e-label-top.e-float-text {
+        color: white;
+        font-size: 15px;
+    }
+       .e-input-group.e-corner {
+        border-radius: 4px;
+    }
+
+      .e-radio-wrapper.e-success .e-radio:checked + label::after { /* csslint allow: adjoining-classes */
         background-color: #689f38;
         color: #689f38;
     }
 
+    .e-radio
     .e-radio-wrapper.e-success .e-radio:checked:focus + label::after,
     .e-radio-wrapper.e-success .e-radio:checked + label:hover::after { /* csslint allow: adjoining-classes */
         background-color: #449d44;
     }
 
-   .e-radio-wrapper.e-success .e-radio:checked + ::before {
+     .e-radio-wrapper.e-success .e-radio:checked + ::before {
         border-color: #689f38;
         background-color: #fff;
     }
@@ -98,11 +107,9 @@
     .e-radio-wrapper.e-success .e-radio:checked + label:hover::before { /* csslint allow: adjoining-classes */
         border-color: #449d44;
     }
-
-    .e-radio-wrapper.e-success .e-radio + label:hover::before {
+      .e-radio-wrapper.e-success .e-radio + label:hover::before {
         border-color: #b1afaf;
     }
-
      .submit-btn {
         display: flex;
         justify-content: center;
@@ -115,9 +122,9 @@
         color:white;
     }
 </style>
+
 @code {
-    private string stringChecked = "Danger"; 
-    private string checkedValue = "Visa Card";
+    private string stringChecked= "Visa Card";
 
     private string Message = string.Empty;
     private Annotation annotation = new Annotation();
@@ -133,25 +140,30 @@
         annotation.ExpiryDate = null;
         annotation.CVV = null;
         StateHasChanged();
-     }
+    }
 
     private void OnInvalidSubmit()
     {
         Message = string.Empty;
     }
 
-       public class Annotation
-        {
-            [Required(ErrorMessage = "The Card Number field is required.")]
-            [StringLength(11,MinimumLength =11,ErrorMessage ="card number should be 11 digits long")]
-            public string CardNumber { get; set; }
-            [Required(ErrorMessage = "The Card Holder field is required.")]
-            public string CardHolder { get; set; }
-            [Required(ErrorMessage = "The Expiry Date field is required.")]
-            [StringLength(4,MinimumLength =4,ErrorMessage ="expiry date should be 4 digits long")]
-            public string ExpiryDate { get; set; }
-            [Required(ErrorMessage = "The CVV field is required.")]
-            [StringLength(3,MinimumLength =3,ErrorMessage ="cvv should be 3 digits long")]
-            public string CVV { get; set; }
-      }
+/*    public void change()
+    {
+        Console.WriteLine(annotation.CardNumber);
+    }
+    */
+    public class Annotation
+    {
+        [Required(ErrorMessage = "The Card Number field is required.")]
+        [StringLength(11,MinimumLength =11,ErrorMessage ="card number should be 11 digits long")]
+        public string CardNumber { get; set; }
+        [Required(ErrorMessage = "The Card Holder field is required.")]
+        public string CardHolder { get; set; }
+        [Required(ErrorMessage = "The Expiry Date field is required.")]
+        [StringLength(4,MinimumLength =4,ErrorMessage ="expiry date should be 4 digits long")]
+        public string ExpiryDate { get; set; }
+        [Required(ErrorMessage = "The CVV field is required.")]
+        [StringLength(3,MinimumLength =3,ErrorMessage ="cvv should be 3 digits long")]
+        public string CVV { get; set; }
+    }
 }
