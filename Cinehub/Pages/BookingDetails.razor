@@ -1,0 +1,100 @@
+﻿@page "/bookingDetails"
+@using Syncfusion.Blazor.Cards
+@using Syncfusion.Blazor.Buttons
+@using System.IO
+
+<section class="bg">
+    <div class="container my-5">
+        @{
+            int i=0;
+        }
+        @foreach (var item in movies)
+        {
+            <div class="my-3">
+                <MovieTile movie=item></MovieTile>
+            </div>
+            i=i+1;
+        }
+    </div>
+</section>
+
+<style>
+    .bg{
+        background-color: black
+    }
+    section {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height:100%
+      }
+
+      img{
+        max-width: 100%;
+        max-height: 100%;
+        display: block; /* remove extra space below image */
+    }
+   .overlay-bg{
+    background: rgb(9,8,14);
+background: linear-gradient(270deg, rgba(9,8,14,1) 77%, rgba(9,8,14,0.34544240059304976) 98%, rgba(9,8,14,0.3) 100%);
+   }
+    .h5-rating{
+        font-size:1rem;
+        font-weight:500
+    }
+    .mybtn{
+        border-radius:20%;
+        border-width:2px;
+        border-color:#93F9B9
+    }
+
+    .genre{
+        font-family:'Lucida Sans';
+        font-size:18px;
+        font-weight:500;
+    }
+
+    .viewerRating{
+        font-family:'Segoe UI';
+        font-size:18px;
+        font-weight:700;
+        color:gray;
+    }
+    </style>
+
+@code {
+    public List<Movies> movies= new List<Movies>(){
+            new Movies()
+            {
+                title="Interstellar",
+                runtime="2h 49min",
+                rating=8.7,
+                genre="Sci-fi",
+                viewerRating="PG-13",
+                imgUrl="/Images/Matthew-McConaughey-Interstellar-Christopher-Nolan.webp",
+                youtubeUrl="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+            },
+            new Movies()
+            {
+                title="The Batman",
+                runtime="2h 53min",
+                rating=8.5,
+                genre="Action",
+                viewerRating="PG-13",
+                imgUrl="/Images/The-Batman.webp",
+                youtubeUrl="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+            },
+              new Movies()
+            {
+                title="Jurassic World: Dominion",
+                runtime="2h 35min",
+                rating=7.6,
+                genre="Sci-fi",
+                viewerRating="PG-13",
+                imgUrl="/Images/jurworld.jpg",
+                youtubeUrl="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+            }
+        };
+    }   
+}

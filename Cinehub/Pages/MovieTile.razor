@@ -1,0 +1,25 @@
+﻿ <div class="card border-0 text-white mx-5" style="height:10rem; border-radius:10%">
+            <img src=@movie.imgUrl class="card-img" style="height:10rem;width:15rem;border-radius:10%">
+            <div class="card-img-overlay overlay-bg" style="border-radius:0%">
+                <div class="position-absolute container-fluid row me-4">
+                        <div class="col-lg-4 col-sm-1"></div>
+                        <div class="col-lg-4 col-sm-8">
+                            <h4 class="card-title">@movie.title</h4>
+                            <div class="row">
+                                <img class="col-2" src="/Images/4373222_imdb_logo_logos_icon.png" style="height:1.5rem"/>
+                                <h5 class="col-10"> @movie.rating</h5>
+                            </div>
+                            <p class="card-text">Booking ID : 23</p>
+                        </div>
+                         <div class="col-lg-4 col-sm-3 my-4">
+                            <a class="row btn btn-outline-success rounded-pill" style="width:100%">Download Ticket</a>
+                            <a class="row my-2 btn btn-outline-danger rounded-pill" style="width:100%">Cancel Booking</a>
+                        </div>
+                  </div>              
+            </div>
+        </div> 
+
+@code {
+    [Parameter]
+    public Movies movie{ get; set; }
+}
