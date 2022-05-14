@@ -29,17 +29,29 @@
         Soundscapes that inspire</h1>
     </div>
   </section>
- <section class="red">
+ <section class="hero-sec standard-bg">
      <div class="divider2">
         <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
             <path d="M0,0V7.23C0,65.52,268.63,112.77,600,112.77S1200,65.52,1200,7.23V0Z" class="shape-fill"></path>
         </svg>
     </div>
-     <div class="wave"></div>
-      <h1>Nice Curves!</h1>
-      <p>A website is like a road. The more curves it has the more interesting it is.</p>
+     <div class="overlay-standard"></div>
+        <div class="hero-head row mt-5 me-5">
+            <div class="col-md-4 col-sm-12 mx-3 my-4">
+                    <h1>Standard</h1>
+            <p>Enjoy our state-of-the-art theatre screens with 0.9mm films providing the ultimate cinematic experience<br></p> 
+            <button class="btn btn-primary btn-lg action-button" type="button">Learn More<i class="fa fa-long-arrow-right ml-2"></i></button>
+            </div>
+            <div class="col-md-8">
+            </div>
+        </div>
  </section>
  <section class="pink">
+     <div class="divider3">
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" class="shape-fill"></path>
+        </svg>
+    </div>
       <h1>Nice Curves!</h1>
       <p>A website is like a road. The more curves it has the more interesting it is.</p>
     </section>
@@ -80,6 +92,16 @@
         z-index:100;
         -webkit-text-fill-color:white;
     }
+    .overlay-standard{
+       position:absolute;
+        top:0;
+        left:0;
+        right:0;
+        bottom:0;
+        z-index:2;
+      background: rgb(131,115,209);
+background: linear-gradient(252deg, rgba(131,115,209,1) 5%, rgba(73,49,193,0.34544240059304976) 43%, rgba(100,79,200,1) 60%);
+    }
     .overlay{
        position:absolute;
         top:0;
@@ -96,15 +118,22 @@ background: linear-gradient(50deg, rgba(9,8,14,1) 44%, rgba(9,8,14,0.5) 71%, rgb
         background-repeat: no-repeat; /* Do not repeat the image */
         background-size: cover; 
     }
+    .standard-bg{
+        background-image: url("/Data/standard.jpg");
+        background-position: center; 
+        background-repeat: no-repeat; 
+        background-size: cover;
+    }
      .blue {
         background: #3c31dd;
       }
 
       .divider2 {
-        position: absolute;
+        position: relative;
         top: 0;
         left: 0;
         width: 100%;
+        z-index:10;
         overflow: hidden;
         line-height: 0;
     }
@@ -114,11 +143,32 @@ background: linear-gradient(50deg, rgba(9,8,14,1) 44%, rgba(9,8,14,0.5) 71%, rgb
         display: block;
         width: calc(100% + 1.3px);
         height: 116px;
+         z-index:10;
     }
 
     .divider2 .shape-fill {
         fill: #09080E;
     }
+
+    .divider3 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.divider3 svg {
+    position: relative;
+    display: block;
+    width: calc(121% + 1.3px);
+    height: 130px;
+}
+
+.divider3 .shape-fill {
+    fill: #644fc8;
+}
       .red {
         background: #dd3f31;
       }
