@@ -1,10 +1,9 @@
 ﻿@page "/bookingDetails"
 @using Syncfusion.Blazor.Cards
 @using Syncfusion.Blazor.Buttons
-@using System.IO
 
 <section class="bg">
-    <div class="container my-5">
+    <div class="container-fluid my-5">
         @{
             int i=0;
         }
@@ -27,7 +26,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        height:100%
+        min-height: 400px;
       }
 
       img{
@@ -64,7 +63,7 @@ background: linear-gradient(270deg, rgba(9,8,14,1) 77%, rgba(9,8,14,0.3454424005
     </style>
 
 @code {
-    public List<Movies> movies= new List<Movies>(){
+    public List<Movies> movies = new List<Movies>(){
             new Movies()
             {
                 title="Interstellar",
@@ -96,5 +95,5 @@ background: linear-gradient(270deg, rgba(9,8,14,1) 77%, rgba(9,8,14,0.3454424005
                 youtubeUrl="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
             }
         };
-    }   
+   
 }
