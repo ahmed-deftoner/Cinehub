@@ -1,6 +1,6 @@
 ﻿<nav class="navbar navbar-expand-md navbar-dark" style="background: rgba(9,8,14,1)">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">Cinehub</a>
+        <a class="navbar-brand name" href="">Cinehub</a>
         <button class="navbar-toggler @NavButtonCssClass" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-label="Toggle navigation" @onclick="ToggleNavMenu">
             <span class="navbar-toggler-icon"></span>
@@ -44,6 +44,15 @@
     </div>
 </nav>
 
+
+<style>
+    @@import url('https://fonts.googleapis.com/css2?family=Molle&display=swap');
+    .name{
+        font-weight:700;
+        font-family: 'Molle', cursive;
+    }
+
+</style>
 @code {
     private bool collapseNavMenu = true;
     private string? NavBarCssClass => collapseNavMenu ? null : "show";
