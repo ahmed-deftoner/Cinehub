@@ -78,12 +78,23 @@
             </div>
         </div>
     </section>
-  <section class="blue" style="position:relative;margin:0;padding:0">
-     <div class="divider5">
+     <section class="hero-sec munch-bg" style="height:500px">
+       <div class="divider5">
         <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
             <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" class="shape-fill"></path>
         </svg>
     </div>
+      <div class="overlay-munch"></div>
+        <div class="hero-head row mt-5 me-5">
+            <div class="col-md-8">
+            </div>
+            <div class="container align-bottom">
+                    <h1 style="color:black;font-weight:800">Munchies!!!</h1>
+                  <p style="color:grey">Buy some exquisite gourmet shit at our cafe<br></p> 
+            </div>
+        </div>
+    </section>
+  <section class="blue" style="position:relative;margin:0;padding:0">
       <h1>Nice Curves!</h1>
      <p>A website is like a road. The more curves it has the more interesting it is.</p>   
       <svg class="editorial"
@@ -141,6 +152,16 @@ background: linear-gradient(205deg, rgba(131,115,209,0.01) 0%, rgba(73,49,193,1)
 background: rgb(78,174,20);
 background: linear-gradient(160deg, rgba(78,174,20,0.34) 0%, rgba(36,179,13,1) 57%);
     }
+    .overlay-munch{
+       position:absolute;
+        top:0;
+        left:0;
+        right:0;
+        bottom:0;
+        z-index:2;
+background: rgb(238,238,232);
+background: linear-gradient(180deg, rgba(238,238,232,0.34) 0%, rgba(238,237,242,1) 93%);
+    }
     .overlay-gold{
        position:absolute;
         top:0;
@@ -181,6 +202,12 @@ background: linear-gradient(50deg, rgba(9,8,14,1) 44%, rgba(9,8,14,0.5) 71%, rgb
     }
     .gold-bg{
           background-image: url("/Data/gold.jpg");
+        background-position: center; 
+        background-repeat: no-repeat; 
+        background-size: cover;
+    }
+       .munch-bg{
+          background-image: url("/Data/pop.jpg");
         background-position: center; 
         background-repeat: no-repeat; 
         background-size: cover;
