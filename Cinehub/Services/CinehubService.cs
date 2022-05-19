@@ -65,5 +65,22 @@ namespace Cinehub.Services
         {
             return _context.Genres.Find(movie.GenreId);
         }
+
+        public int getShowId(Movie movie, DateTime date)
+        {
+            var shows = from s in _context.Set<Show>()
+                        join m in _context.Set<Movie>()
+                         on s.MovieId equals m.MovieId
+                        where (s.ShowDate.Day == date.Day &&
+                        m.MovieId == movie.MovieId)
+                        select new
+                        { s, m };
+            List<Show> list = new List<Show>();
+            foreach (var show in shows)
+            {
+                list.Add(show.s);
+            }
+            return list[0].ShowId;
+        }
     }
 }
