@@ -70,14 +70,14 @@ background: linear-gradient(270deg, rgba(9,8,14,1) 77%, rgba(9,8,14,0.3454424005
     /// <summary>
     /// Create and download the simple PDF document
     ///<summary>
-    ///public CinehubService cinheubService{ get; set; }
+    public CinehubService cinheubService{ get; set; }
     public List<int> bookingId;
     public List<Movie> movies;
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        cinheubService = new CinheubService();
+        cinheubService = new CinehubService();
         bookingId = cinheubService.getBookingId("ahmed_deftoner");
         movies = cinheubService.GetMovies("ahmed_deftoner");
     }

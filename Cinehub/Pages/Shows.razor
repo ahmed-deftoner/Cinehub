@@ -1,7 +1,7 @@
 ﻿@page "/shows"
 @using Syncfusion.Blazor.Cards
 @using Syncfusion.Blazor.Navigations;
-@inject CinheubService cinservice
+@inject CinehubService cinservice
   
 <section class="bg">
     <div class="container mt-3">
@@ -73,7 +73,7 @@
 </style>
 
 @code{
-    CinheubService cinheubService;
+    CinehubService cinheubService;
     public class TabData
     {
         public string Header { get; set; }
@@ -92,7 +92,7 @@
 
     protected override void OnInitialized()
     {
-        cinheubService = new CinheubService();
+        cinheubService = new CinehubService();
         DayOfWeek wk = DateTime.Today.DayOfWeek;
         date.Add(DateTime.Now);
         for(int i = 0; i < 5; ++i)
