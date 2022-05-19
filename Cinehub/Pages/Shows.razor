@@ -1,6 +1,7 @@
 ﻿@page "/shows"
 @using Syncfusion.Blazor.Cards
 @using Syncfusion.Blazor.Navigations;
+@inject CinheubService cinservice
   
 <section class="bg">
     <div class="container mt-3">
@@ -14,11 +15,16 @@
                         </ChildContent>
                         <ContentTemplate>
                            <div class="row my-4">
-                                  @foreach(Movies movie in item.Content){
+                                @{
+                                    int i = 0;
+                                }
+                                @foreach(Movie movie in item.Content){
+                                    Console.WriteLine(i);
                                     <div class="col-md-5 my-3">
-                                        <MovieCard movies="movie"></MovieCard>
+                                        <MovieCard cinheubService="cinheubService" movies="movie" date="item.Date" genre="item.Genres[i]" showid="item.ShowId[i]"></MovieCard>
                                     </div>
-                                  }
+                                    i = i + 1;
+                                }
                              </div>
                         </ContentTemplate>
                      </TabItem> 
@@ -67,125 +73,40 @@
 </style>
 
 @code{
+    CinheubService cinheubService;
     public class TabData
     {
         public string Header { get; set; }
-        public List<Movies> Content { get; set; }
+        public List<Movie> Content { get; set; }
+        public List<Genre> Genres{ get; set; }
+        public List<int> ShowId{ get; set; }
+        public DateTime Date{ get; set; }
     }
     public String[] days=new String[5];
     public List<TabData> TabItems;
-    public int count = 7;
+    public List<Movie>[] movies = new List<Movie>[5];
+    public List<Genre>[] genres = new List<Genre>[5];
+    public List<int>[] showId = new List<int>[5];
+    public List<DateTime> date = new List<DateTime>();
 
-    public List<Movies>[] movies = new List<Movies>[5];
 
-    public void Movielist0()
-    {
-        movies[0] = new List<Movies>(){
-            new Movies()
-            {
-                title="Interstellar",
-                runtime="2h 49min",
-                rating=8.7,
-                genre="Sci-fi",
-                viewerRating="PG-13",
-                imgUrl="/Images/Matthew-McConaughey-Interstellar-Christopher-Nolan.webp",
-                youtubeUrl="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-            },
-            new Movies()
-            {
-                title="The Batman",
-                runtime="2h 53min",
-                rating=8.5,
-                genre="Action",
-                viewerRating="PG-13",
-                imgUrl="/Images/The-Batman.webp",
-                youtubeUrl="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-            },
-              new Movies()
-            {
-                title="Jurassic World: Dominion",
-                runtime="2h 35min",
-                rating=7.6,
-                genre="Sci-fi",
-                viewerRating="PG-13",
-                imgUrl="/Images/jurworld.jpg",
-                youtubeUrl="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-            }
-        };
-    }
-
-    public void Movielist1()
-    {
-        movies[1] = new List<Movies>(){        
-            new Movies()
-            {
-                title="The Batman",
-                runtime="2h 53min",
-                rating=8.5,
-                genre="Action",
-                viewerRating="PG-13",
-                imgUrl="/Images/The-Batman.webp",
-                youtubeUrl="https://www.youtube.com/watch?v=mqqft2x_Aa4"
-            }
-        };
-    }
-
-    public void Movielist2()
-    {
-        movies[2] = new List<Movies>(){        
-            new Movies()
-            {
-                title="The Batman",
-                runtime="2h 53min",
-                rating=8.5,
-                genre="Action",
-                viewerRating="PG-13",
-                imgUrl="/Images/The-Batman.webp",
-                youtubeUrl="https://www.youtube.com/watch?v=mqqft2x_Aa4"
-            }
-        };
-    }
-    public void Movielist3()
-    {
-        movies[3] = new List<Movies>(){        
-            new Movies()
-            {
-                title="The Batman",
-                runtime="2h 53min",
-                rating=8.5,
-                genre="Action",
-                viewerRating="PG-13",
-                imgUrl="/Images/The-Batman.webp",
-                youtubeUrl="https://www.youtube.com/watch?v=mqqft2x_Aa4"
-            }
-        };
-    }
-    public void Movielist4()
-    {
-        movies[4] = new List<Movies>(){        
-            new Movies()
-            {
-                title="The Batman",
-                runtime="2h 53min",
-                rating=8.5,
-                genre="Action",
-                viewerRating="PG-13",
-                imgUrl="/Images/The-Batman.webp",
-                youtubeUrl="https://www.youtube.com/watch?v=mqqft2x_Aa4"
-            }
-        };
-    }
     protected override void OnInitialized()
     {
-        Movielist0();
-        Movielist1();
-        Movielist2();
-        Movielist3();
-        Movielist4();
+        cinheubService = new CinheubService();
         DayOfWeek wk = DateTime.Today.DayOfWeek;
+        date.Add(DateTime.Now);
         for(int i = 0; i < 5; ++i)
         {
             days[i]=wk.ToString();
+            genres[i] = new List<Genre>();
+            showId[i] = new List<int>();
+            movies[i] = cinheubService.getShows(date[i]);
+            foreach (Movie item in movies[i])
+            {
+                genres[i].Add(cinheubService.GetGenre(item));
+                showId[i].Add(cinheubService.getShowId(item, date[i]));
+            }
+            date.Add(date[i].AddDays(1));
             wk=wk+1;
             if ((int)wk == 7)
                 wk = 0;
@@ -195,34 +116,44 @@
             new TabData
             {
                 Header=days[0],
-                Content=movies[0]
+                Content=movies[0],
+                Date=date[0],
+                Genres=genres[0],
+                ShowId=showId[0]
             },
              new TabData
             {
                 Header=days[1],
-                Content=movies[1]
+                Content=movies[1],
+                Date=date[1],
+                Genres=genres[1],
+                ShowId=showId[1]
             },
              new TabData
             {
                 Header=days[2],
-                Content=movies[2]
+                Content=movies[2],
+                Date=date[2],
+                Genres=genres[2],
+                ShowId=showId[2]
             },
              new TabData
             {
                 Header=days[3],
-                Content=movies[3]
+                Content=movies[3],
+                Date=date[3],
+                Genres=genres[3],
+                ShowId=showId[3]
             },
              new TabData
             {
                 Header=days[4],
-                Content=movies[4]
+                Content=movies[4],
+                Date=date[4],
+                Genres=genres[4],
+                ShowId=showId[4]
             }
         };
-        for(int i=0;i<5;++i)
-        {
-            Console.WriteLine(days[i]);
-        }
     }
 
 }
-
