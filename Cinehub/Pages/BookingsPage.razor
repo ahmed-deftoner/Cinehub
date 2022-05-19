@@ -1,0 +1,201 @@
+﻿@page "/booking/{showId:int}"
+@using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.DropDowns
+
+<section class="bg">
+    <div class="container">
+        @if (booked == false)
+        {
+            <div class="row gx-1 mx-4 my-4">
+                <SfDropDownList TItem="Screen" TValue="string" PopupHeight="230px"  Placeholder="Select type" @bind-Value="@DropDownValue" DataSource="@screens">
+                    <DropDownListEvents TItem="Screen" TValue="string" ValueChange="OnChange"/>
+                    <DropDownListFieldSettings Text="content" Value="Id"/>
+                </SfDropDownList>
+            </div>
+            @for (int j = 0; j < 10; ++j)
+            {
+                int row = j;
+                <div class="row">
+                    <div class="col-md-3 text-end">
+                        @for (int i = 0; i < 4; ++i)
+                        {
+                            int col = i;
+                            <SfButton CssClass="@css[row,col]" Disabled="@isDisabled[row,col]" IsToggle="true" OnClick="(e=>toggle(row,col))" @ref="toggleBtn[row,col]"></SfButton>
+                        }
+                    </div>
+                    <div class="col-md-6 text-center">
+                        @for (int i = 0; i < 8; ++i)
+                        {
+                            int col = i;
+                            <SfButton CssClass="@css[row,col+4]" Disabled="@isDisabled[row,col+4]" IsToggle="true" OnClick="(e=>toggle(row,col+4))" @ref="toggleBtn[row,col+4]"></SfButton>
+                        }
+                    </div>
+                    <div class="col-md-3 text-start">
+                        @for (int i = 0; i < 4; ++i)
+                        {
+                            int col = i;
+                            <SfButton CssClass="@css[row,col+12]" Disabled="@isDisabled[row,col+12]" IsToggle="true" OnClick="(e=>toggle(row,col+12))" @ref="toggleBtn[row,col+12]"></SfButton>
+                        }
+                    </div>
+                </div>
+            }
+            <div class="row my-4">
+                   <SfButton CssClass="e-danger" OnClick="(e=>Book())">Book</SfButton>
+            </div>
+        }
+        else
+        {
+            <Payment></Payment>
+        }
+    </div>
+</section>
+
+@code{
+    public string username = "ahmed_deftoner";
+    public class Screen
+    {
+        public int Id;
+        public string content;
+    }
+    private List<Screen> screens;
+    public string DropDownValue;
+    public int showTimeId;
+    public bool booked;
+    public string ChangeValue { get; set; } = "";
+    private List<int> selected = new List<int>();
+    SfButton[,] toggleBtn=new SfButton[10,16];
+    public string[,] css = new string[10, 16];
+    public bool[,] isDisabled = new bool[10, 16];
+    [Parameter]
+    public int showId { get; set; }   
+    public CinehubService cinheubService{ get; set; }
+    public List<ShowTiming> timings{ get; set; }
+    public string seatNumbers{ get; set; }
+
+    public BookingsPage()
+    {
+        cinheubService = new CinehubService();
+    }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        seatNumbers = "";
+        booked = false;
+        timings = cinheubService.GetShowTiming(showId);
+        screens = new List<Screen>();
+        foreach (ShowTiming item in timings)
+        {
+            screens.Add(new Screen() { Id=item.ShowTimeId, content=item.ShowTime.ToString("hh\\:mm")+" ("+item.ScreenType+")"});
+        }
+        DropDownValue = screens[0].content;
+        ChangeValue= screens[0].content;
+        showTimeId = screens[0].Id;
+        displayBooked();
+    }
+
+    public void OnChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, Screen> args)
+    {
+        this.ChangeValue = args.ItemData.content;
+        showTimeId = args.ItemData.Id;
+        seatNumbers = "";
+        displayBooked();
+    }
+
+    public void displayBooked()
+    {
+        string[] bookedSeats={};
+        string[] temp = { };
+        Console.WriteLine(showTimeId);
+        List<Booking> alreadyBooked = cinheubService.GetBookings(showTimeId);
+        foreach (var item in alreadyBooked)
+        {
+            Console.WriteLine(item.SeatNumbers);
+            temp = item.SeatNumbers.Split("-");
+            bookedSeats = bookedSeats.Union(temp).ToArray();
+        }
+        foreach (var item in bookedSeats)
+        {
+            Console.WriteLine(item);
+
+        }
+        for (int i = 0; i < 10; ++i)
+        {
+            for (int j = 0; j < 16; ++j)
+            {
+                css[i, j] = "e-primary";
+                isDisabled[i, j] = false;
+                foreach (var item in bookedSeats)
+                {
+                    if ((i * 16) + j == Int32.Parse(item))
+                    {
+                        css[i, j] = "e-danger";
+                        isDisabled[i, j] = true;
+                    }   
+                }
+            }
+        }
+    }
+
+    public void toggle(int i,int j)
+    {
+        if (toggleBtn[i,j].CssClass == "e-primary")
+        {
+            css[i,j] = "e-warning";
+            selected.Add((i * 16) + j);
+        }
+        else
+        {
+            css[i,j]="e-primary";
+            selected.Remove((i * 16) + j);
+        }
+        StateHasChanged();
+
+    }
+
+    public void Book()
+    {
+        for(int i=0;i<selected.Count-1;++i)
+        {
+            seatNumbers = seatNumbers + selected[i].ToString() + "-";
+        }
+        seatNumbers = seatNumbers + selected[selected.Count-1].ToString();
+        Console.WriteLine("user " + username);
+        Console.WriteLine("showtime id " + showTimeId.ToString());
+        Console.WriteLine("no of seats = " + selected.Count.ToString());
+        Console.WriteLine(seatNumbers);
+        /*Booking booking = new Booking()
+        {
+            Username=username,
+            ShowTimeId=showTimeId,
+            NoOfSeats=selected.Count,
+            SeatNumbers=seatNumbers
+        };
+        cinheubService.InsertBooking(booking);*/
+        booked = true;
+        //displayBooked();
+    }
+}
+<style>
+    .bg{
+        background-color: black
+    }
+    section {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 400px;
+      }
+
+    .e-custom {
+        color: blue;    
+    }
+
+    .e-custom, .e-custom:hover, .e-custom:focus, .e-custom:active {
+        background-color: blue;
+        color: #fff;
+    }
+  
+</style>
+
