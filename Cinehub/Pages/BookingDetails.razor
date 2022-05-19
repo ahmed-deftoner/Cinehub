@@ -1,6 +1,10 @@
 ﻿@page "/bookingDetails"
 @using Syncfusion.Blazor.Cards
 @using Syncfusion.Blazor.Buttons
+@inject Microsoft.JSInterop.IJSRuntime JS
+@using System.IO
+@using BlazorDemos.Data.FileFormats.PDF
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment hostingEnvironment
 
 <section class="bg">
     <div class="container-fluid my-5">
@@ -10,7 +14,7 @@
         @foreach (var item in movies)
         {
             <div class="my-3">
-                <MovieTile movie=item></MovieTile>
+                <MovieTile movie=item id=bookingId[i]></MovieTile>
             </div>
             i=i+1;
         }
@@ -63,37 +67,25 @@ background: linear-gradient(270deg, rgba(9,8,14,1) 77%, rgba(9,8,14,0.3454424005
     </style>
 
 @code {
-    public List<Movies> movies = new List<Movies>(){
-            new Movies()
-            {
-                title="Interstellar",
-                runtime="2h 49min",
-                rating=8.7,
-                genre="Sci-fi",
-                viewerRating="PG-13",
-                imgUrl="/Images/Matthew-McConaughey-Interstellar-Christopher-Nolan.webp",
-                youtubeUrl="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-            },
-            new Movies()
-            {
-                title="The Batman",
-                runtime="2h 53min",
-                rating=8.5,
-                genre="Action",
-                viewerRating="PG-13",
-                imgUrl="/Images/The-Batman.webp",
-                youtubeUrl="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-            },
-              new Movies()
-            {
-                title="Jurassic World: Dominion",
-                runtime="2h 35min",
-                rating=7.6,
-                genre="Sci-fi",
-                viewerRating="PG-13",
-                imgUrl="/Images/jurworld.jpg",
-                youtubeUrl="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-            }
-        };
-   
+    /// <summary>
+    /// Create and download the simple PDF document
+    ///<summary>
+    ///public CinehubService cinheubService{ get; set; }
+    public List<int> bookingId;
+    public List<Movie> movies;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        cinheubService = new CinheubService();
+        bookingId = cinheubService.getBookingId("ahmed_deftoner");
+        movies = cinheubService.GetMovies("ahmed_deftoner");
+    }
+
+    protected async void ImageInsertionPDF(MouseEventArgs args)
+    {	   
+        ImageInsertionService service = new ImageInsertionService(hostingEnvironment);
+        MemoryStream documentStream = service.ImageInsertionPDF();
+        await JS.SaveAs("ImageInsertion.pdf", documentStream.ToArray());
+    }
 }
