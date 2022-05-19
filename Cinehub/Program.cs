@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Cinehub.Services;
 using Syncfusion.Blazor;
 
 Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NTk3MTcyQDMxMzkyZTM0MmUzME50VkxER2EzWHVKWnZ1NzYzY0Q3UEdRWXRnOW5TeWhsNFNPQXdnYzlKQWM9");
@@ -7,6 +8,7 @@ Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NTk3MTcyQDMxMzky
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSyncfusionBlazor();
+builder.Services.AddScoped<CinehubService>();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
