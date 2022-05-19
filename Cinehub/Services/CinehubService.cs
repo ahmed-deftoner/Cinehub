@@ -82,5 +82,13 @@ namespace Cinehub.Services
             }
             return list[0].ShowId;
         }
+
+        public List<ShowTiming> GetShowTiming(int showId)
+        {
+            var timing = _context.ShowTimings
+            .Where(s => s.ShowId == showId)
+            .ToList();
+            return timing;
+        }
     }
 }
