@@ -1,7 +1,5 @@
 ﻿using Syncfusion.Pdf;
 using Syncfusion.Pdf.Graphics;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
 
 namespace Cinehub.Services
 {
