@@ -90,5 +90,21 @@ namespace Cinehub.Services
             .ToList();
             return timing;
         }
+
+        public List<Movie> GetMovies(string username)
+        {
+            var movie = from st in _context.Set<ShowTiming>()
+                        join b in _context.Set<Booking>() on st.ShowTimeId equals b.ShowTimeId
+                        join s in _context.Set<Show>() on st.ShowId equals s.ShowId
+                        join m in _context.Set<Movie>() on s.MovieId equals m.MovieId
+                        where b.Username == username
+                        select new { m };
+            List<Movie> movies = new List<Movie>();
+            foreach (var mov in movie)
+            {
+                movies.Add(mov.m);
+            }
+            return movies;
+        }
     }
 }
