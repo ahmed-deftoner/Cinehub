@@ -45,5 +45,21 @@ namespace Cinehub.Services
             return bookingsId;
         }
 
+        public List<Movie> getShows(DateTime day)
+        {
+            var shows = from s in _context.Set<Show>()
+                        join m in _context.Set<Movie>()
+                         on s.MovieId equals m.MovieId
+                        where s.ShowDate.Day == (day.Day)
+                        select new
+                        { s, m };
+            List<Movie> movies = new List<Movie>();
+            foreach (var show in shows)
+            {
+                movies.Add(show.m);
+            }
+            return movies;
+        }
+
     }
 }
