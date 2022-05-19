@@ -61,5 +61,9 @@ namespace Cinehub.Services
             return movies;
         }
 
+        public Genre GetGenre(Movie movie)
+        {
+            return _context.Genres.Find(movie.GenreId);
+        }
     }
 }
