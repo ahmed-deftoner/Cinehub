@@ -11,5 +11,17 @@ namespace Cinehub.Services
             _context = new CinehubContext();
         }
 
+        public void InsertBooking(Booking booking)
+        {
+            try
+            {
+                _context.Bookings.Add(booking);
+                _context.SaveChanges();
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }
