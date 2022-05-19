@@ -32,5 +32,18 @@ namespace Cinehub.Services
             return bookings;
         }
 
+        public List<int> getBookingId(string username)
+        {
+            List<int> bookingsId = new List<int>();
+            var bookings = _context.Bookings
+            .Where(b => b.Username == username)
+            .ToList();
+            foreach (var booking in bookings)
+            {
+                bookingsId.Add(booking.BookingId);
+            }
+            return bookingsId;
+        }
+
     }
 }
