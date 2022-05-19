@@ -23,5 +23,14 @@ namespace Cinehub.Services
                 throw;
             }
         }
+
+        public List<Booking> GetBookings(int showTimeId)
+        {
+            var bookings = _context.Bookings
+            .Where(b => b.ShowTimeId == showTimeId)
+            .ToList();
+            return bookings;
+        }
+
     }
 }
